@@ -1,7 +1,19 @@
-import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+const SignIn = ({ navigation }) => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const authentic = useSelector((state) => state.data.user)
+    const authentication = () => {
+        if (authentic.email == email && authentic.password == password) {
+            alert("you are successfully login")
+        }
+        else {
+            alert("please enter valid account")
+        }
 
-const SignIn = () => {
+    }
     return (
         // <ScrollView >
         <View style={styles.container}>
@@ -13,14 +25,19 @@ const SignIn = () => {
                     <Text style={{ paddingHorizontal: 10 }}>Email</Text>
                     <TextInput
                         placeholder='Enter email'
-                        style={styles.input} />
+                        style={styles.input}
+                        value={email}
+                        onChangeText={setEmail} />
                     <Text style={{ paddingHorizontal: 10, marginTop: 20 }}>Passcode</Text>
                     <TextInput
                         placeholder='Enter passcode'
-                        style={styles.input} />
+                        style={styles.input}
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={true} />
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 20 }}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => { authentication() }}>
                         <Text style={{ color: 'white' }}>Sign In</Text>
                     </TouchableOpacity>
                 </View>
